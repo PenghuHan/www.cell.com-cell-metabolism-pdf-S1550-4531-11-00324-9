@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF文档展示 - GitHub Pages</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(90deg, #2c3e50, #4a6491);
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .intro {
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 18px;
+            color: #555;
+        }
+        
+        .pdf-container {
+            width: 100%;
+            height: 800px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .pdf-viewer {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .download-section {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+            margin: 5px;
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #2c3e50;
+            color: #ecf0f1;
+            font-size: 14px;
+        }
+        
+        .instructions {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        
+        .instructions h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .instructions ol {
+            margin-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+            
+            .pdf-container {
+                height: 500px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>PDF文档展示页面</h1>
+            <p class="subtitle">使用GitHub Pages托管</p>
+        </header>
+        
+        <div class="content">
+            <div class="intro">
+                <p>此页面展示您上传的PDF文档内容</p>
+            </div>
+            
+            <div class="pdf-container">
+                <!-- 这里将显示PDF -->
+                <iframe id="pdfViewer" class="pdf-viewer" src=""></iframe>
+            </div>
+            
+            <div class="download-section">
+                <p>如果PDF无法正常显示，您可以下载文档查看：</p>
+                <a href="#" id="downloadLink" class="btn">下载PDF文档</a>
+                <a href="https://github.com/yourusername/your-repo" class="btn btn-secondary" target="_blank">查看GitHub仓库</a>
+            </div>
+            
+            <div class="instructions">
+                <h3>如何设置您的PDF文件</h3>
+                <ol>
+                    <li>将您的PDF文件上传到GitHub仓库中</li>
+                    <li>将PDF文件重命名为不含空格和特殊字符的名称（如：document.pdf）</li>
+                    <li>更新下面JavaScript代码中的pdfFileName变量为您的PDF文件名</li>
+                    <li>提交更改并推送到GitHub</li>
+                    <li>您的PDF将在几分钟后通过GitHub Pages可访问</li>
+                </ol>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 PDF展示页面 | 托管于GitHub Pages</p>
+        </footer>
+    </div>
+
+    <script>
+        // 设置PDF文件名（请替换为您的实际PDF文件名）
+        const pdfFileName = 'your-document.pdf';
+        
+        // 获取当前页面的基础URL（GitHub Pages URL）
+        const baseUrl = window.location.href.split('/').slice(0, -1).join('/');
+        
+        // 构建PDF文件的完整URL
+        const pdfUrl = `${baseUrl}/${pdfFileName}`;
+        
+        // 设置PDF查看器和下载链接
+        document.getElementById('pdfViewer').src = pdfUrl;
+        document.getElementById('downloadLink').href = pdfUrl;
+        
+        // 添加错误处理
+        document.getElementById('pdfViewer').onerror = function() {
+            alert('无法加载PDF文件。请确保文件名正确且文件已上传到仓库。');
+        };
+    </script>
+</body>
+</html>
